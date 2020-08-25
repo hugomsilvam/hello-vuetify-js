@@ -32,6 +32,7 @@
         </template>
       </v-list>
     </v-navigation-drawer>
+    <floating-button />
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -39,10 +40,11 @@
 </template>
 
 <script>
+import FloatingButton from "./components/FloatingButton.vue";
 export default {
   name: "App",
 
-  components: {},
+  components: { FloatingButton },
 
   data: () => ({
     drawer: null,
@@ -59,7 +61,7 @@ export default {
       },
       { divider: true },
       { heading: "Labels" },
-      { icon: "mdi-plus", text: "Create new label", link: '/addlabel' },
+      { icon: "mdi-plus", text: "Create new label", link: "/addlabel" },
       { divider: true },
       {
         icon: "mdi-archive",
