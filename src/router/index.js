@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import Hello from '../views/Hello.vue'
 import About from '../views/About.vue'
 import LabelModal from '../components/LabelModal'
+import NoteModal from '../components/NoteModal'
+import ReminderModal from '../components/ReminderModal'
 
 Vue.use(VueRouter)
 
@@ -17,6 +19,16 @@ const routes = [
     path: '/addlabel',
     name: 'Add note label',
     component: LabelModal
+  },
+  {
+    path: '/addnote',
+    name: 'Add note',
+    component: NoteModal,
+  },
+  {
+    path: '/addreminder',
+    name: 'Add reminder',
+    component: ReminderModal
   },
   {
     path: '/hello',

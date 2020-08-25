@@ -24,7 +24,7 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+              <v-btn color="blue darken-1" text @click="closeDialog">Close</v-btn>
               <v-btn color="red darken-1" text @click="onSubmit">Save</v-btn>
             </v-card-actions>
           </v-card>
@@ -49,7 +49,7 @@ export default {
           (v) => !!v || "Note Label is required!",
           (v) =>
             (!!v && v.length <= 15) ||
-            "Note label must less than 15 characteres",
+            "Note label must have less than 15 characteres",
         ],
       };
     },

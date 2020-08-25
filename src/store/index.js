@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     labels: ['hugo'], // list of strings (avoid duplicated strings)
-    notes: []
+    notes: [],
+    reminders: [],
   },
   mutations: {
     addLabel: (state, payload) => {
@@ -15,7 +16,24 @@ export default new Vuex.Store({
         state.labels = []
       }
       state.labels.unshift(payload)
+    },
+
+    addNote: (state, payload) => {
+      console.log('mutation add note with payload', payload)
+      if (!state.notes || !state.notes.length) {
+        state.notes = []
+      }
+      state.notes.unshift(payload);
+    },
+
+    addReminder: (state, payload) => {
+      console.log('mutation add reminder with payload', payload)
+      if (!state.reminders || !state.reminders.length) {
+        state.reminders = []
+      }
+      state.reminders.unshift(payload);
     }
+
   },
   actions: {
     addLabel: ({ state, commit }, payload) => {
@@ -29,6 +47,24 @@ export default new Vuex.Store({
           commit('addLabel', payload)
           resolve()
         }
+      })
+    },
+
+    addNote: ({ state, commit }, payload) => {
+      console.log('current state', state)
+      console.log('action add note with payload ', payload)
+      return new Promise((resolve) => {
+        commit('addNote', payload);
+        resolve()
+      })
+    },
+
+    addReminder: ({ state, commit }, payload) => {
+      console.log('current state', state)
+      console.log('action add reminder with payload ', payload)
+      return new Promise((resolve) => {
+        commit('addReminder', payload)
+        resolve();
       })
     }
   },

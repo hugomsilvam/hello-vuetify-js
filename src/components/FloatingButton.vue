@@ -17,10 +17,10 @@
           <v-icon v-else>mdi-plus</v-icon>
         </v-btn>
       </template>
-      <v-btn fab dark small color="indigo">
+      <v-btn to="/addreminder" fab dark small color="indigo">
         <v-icon>mdi-alarm</v-icon>
       </v-btn>
-      <v-btn fab dark small color="pink">
+      <v-btn to="/addnote" fab dark small color="pink">
         <v-icon>mdi-lightbulb-outline</v-icon>
       </v-btn>
     </v-speed-dial>
