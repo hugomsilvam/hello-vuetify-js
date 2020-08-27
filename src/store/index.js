@@ -6,8 +6,19 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     labels: ['hugo'], // list of strings (avoid duplicated strings)
-    notes: [],
-    reminders: [],
+    notes: [{
+      id: 1,
+      title: 'bananas da madeira',
+      description: 'cenas cenas cenas',
+      deleted: true
+    }, {
+      id: 22,
+      title: 'comprar pao',
+      description: 'aaaaaaaaaaaaa',
+      date: new Date(),
+      deleted: false
+    }
+    ],
   },
   mutations: {
     addLabel: (state, payload) => {
@@ -15,6 +26,8 @@ export default new Vuex.Store({
       if (!state.labels || !state.labels.length) {
         state.labels = []
       }
+
+      payload.id = state.labels.length + 1;
       state.labels.unshift(payload)
     },
 
@@ -23,17 +36,10 @@ export default new Vuex.Store({
       if (!state.notes || !state.notes.length) {
         state.notes = []
       }
+
+      payload.id = state.notes.length + 1;
       state.notes.unshift(payload);
     },
-
-    addReminder: (state, payload) => {
-      console.log('mutation add reminder with payload', payload)
-      if (!state.reminders || !state.reminders.length) {
-        state.reminders = []
-      }
-      state.reminders.unshift(payload);
-    }
-
   },
   actions: {
     addLabel: ({ state, commit }, payload) => {
@@ -63,7 +69,7 @@ export default new Vuex.Store({
       console.log('current state', state)
       console.log('action add reminder with payload ', payload)
       return new Promise((resolve) => {
-        commit('addReminder', payload)
+        commit('addNote', payload)
         resolve();
       })
     }
@@ -72,10 +78,10 @@ export default new Vuex.Store({
   },
   getters: {
     listNotes: (state) => {
-      return state.notes.filter(note => (!note.reminderDate && !note.archived && !note.deleted))
+      return state.notes.filter(note => (!note.date && !note.archived && !note.deleted))
     },
     listReminders: (state) => {
-      return state.notes.filter(note => (note.reminderDate && !note.archived && !note.deleted))
+      return state.notes.filter(note => (note.date && !note.archived && !note.deleted))
     },
     listArchived: (state) => {
       return state.notes.filter(note => (note.archived && !note.deleted))

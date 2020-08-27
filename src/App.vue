@@ -71,7 +71,7 @@ export default {
       {
         icon: "mdi-delete",
         text: "Trash",
-        link: "/deleted",
+        link: "/trash",
       },
       { divider: true },
     ],
