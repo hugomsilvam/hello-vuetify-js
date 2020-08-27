@@ -12,7 +12,8 @@ export default new Vuex.Store({
         title: 'bananas da madeira',
         description: 'cenas cenas cenas',
         archived: false,
-        deleted: false
+        deleted: false,
+        labels: ['hugo'],
       },
       {
         id: 22,
@@ -20,7 +21,8 @@ export default new Vuex.Store({
         description: 'aaaaaaaaaaaaa',
         date: new Date(),
         archived: false,
-        deleted: false
+        deleted: false,
+        labels: ['aaa']
       }
     ],
   },
@@ -146,5 +148,8 @@ export default new Vuex.Store({
     listDeleted: (state) => {
       return state.notes.filter(note => note.deleted)
     },
+    listNotesByLabel: (state) => (label) => {
+      return state.notes.filter(note => note.labels.includes(label))
+    }
   }
 })

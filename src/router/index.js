@@ -7,6 +7,7 @@ import Notes from '../views/Notes.vue'
 import Reminders from '../views/Reminders'
 import Archive from '../views/Archive'
 import Trash from '../views/Trash'
+import Labels from '../views/Labels'
 import LabelModal from '../components/LabelModal'
 import NoteModal from '../components/NoteModal'
 import ReminderModal from '../components/ReminderModal'
@@ -53,6 +54,11 @@ const routes = [
     path: '/trash',
     name: 'Deleted notes',
     component: Trash
+  },
+  {
+    path: '/label/:label',
+    name: 'filter by label',
+    component: Labels
   },
   {
     path: '/hello',

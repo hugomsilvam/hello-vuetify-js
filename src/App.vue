@@ -11,22 +11,35 @@
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" app clipped color="grey lighten-4">
       <v-list dense class="grey lighten-4">
-        <template v-for="(item, i) in items">
-          <v-row v-if="item.heading" :key="i" align="center">
-            <v-col cols="6">
-              <v-subheader v-if="item.heading">{{ item.heading }}</v-subheader>
-            </v-col>
-            <v-col cols="6" class="text-right">
-              <v-btn small text>edit</v-btn>
-            </v-col>
-          </v-row>
-          <v-divider v-else-if="item.divider" :key="i" dark class="my-4"></v-divider>
+        <template v-for="(item, i) in firstItems">
+          <v-divider v-if="item.divider" :key="i" dark class="my-4"></v-divider>
           <v-list-item v-else :key="i" link :to="item.link">
             <v-list-item-action>
-              <v-icon>{{ item.icon }}</v-icon>
+              <v-icon>{{item.icon}}</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title class="grey--text">{{ item.text }}</v-list-item-title>
+              <v-list-item-title class="grey--text">{{item.text}}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </template>
+        <template v-for="label in labels">
+          <v-list-item :key="label" link :to="'/label/'+label">
+            <v-list-item-action>
+              <v-icon>mdi-label</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title class="grey--text">{{label}}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </template>
+        <template v-for="(item, i) in lastItems">
+          <v-divider v-if="item.divider" :key="i+10" dark class="my-4"></v-divider>
+          <v-list-item v-else :key="i+10" link :to="item.link">
+            <v-list-item-action>
+              <v-icon>{{item.icon}}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title class="grey--text">{{item.text}}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </template>
@@ -41,6 +54,7 @@
 
 <script>
 import FloatingButton from "./components/FloatingButton.vue";
+import { mapState } from "vuex";
 export default {
   name: "App",
 
@@ -48,9 +62,9 @@ export default {
 
   data: () => ({
     drawer: null,
-    items: [
+    firstItems: [
       {
-        icon: "mdi-lightbulb-outline",
+        icon: "mdi-lightbulb",
         text: "Notes",
         link: "/notes",
       },
@@ -60,8 +74,9 @@ export default {
         link: "/reminders",
       },
       { divider: true },
-      { heading: "Labels" },
       { icon: "mdi-plus", text: "Create new label", link: "/addlabel" },
+    ],
+    lastItems: [
       { divider: true },
       {
         icon: "mdi-archive",
@@ -76,6 +91,10 @@ export default {
       { divider: true },
     ],
   }),
+
+  computed: {
+    ...mapState(["labels"]),
+  },
 };
 </script>
 
