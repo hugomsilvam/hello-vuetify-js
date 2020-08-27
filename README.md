@@ -1,5 +1,9 @@
 # hello-vuetify-js
 
+I created this vue app for learn how to use vuex, vue-router, vuetify all together in a vue application 😅
+
+This is "My Google Keep" vue app 📝 😆
+
 ## Project setup
 ```
 npm install
