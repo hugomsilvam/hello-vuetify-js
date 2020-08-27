@@ -5,19 +5,23 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    labels: ['hugo'], // list of strings (avoid duplicated strings)
-    notes: [{
-      id: 1,
-      title: 'bananas da madeira',
-      description: 'cenas cenas cenas',
-      deleted: true
-    }, {
-      id: 22,
-      title: 'comprar pao',
-      description: 'aaaaaaaaaaaaa',
-      date: new Date(),
-      deleted: false
-    }
+    labels: ['hugo', 'aaa'], // list of strings (avoid duplicated strings)
+    notes: [
+      {
+        id: 1,
+        title: 'bananas da madeira',
+        description: 'cenas cenas cenas',
+        archived: false,
+        deleted: false
+      },
+      {
+        id: 22,
+        title: 'comprar pao',
+        description: 'aaaaaaaaaaaaa',
+        date: new Date(),
+        archived: false,
+        deleted: false
+      }
     ],
   },
   mutations: {
@@ -27,7 +31,6 @@ export default new Vuex.Store({
         state.labels = []
       }
 
-      payload.id = state.labels.length + 1;
       state.labels.unshift(payload)
     },
 
@@ -40,6 +43,21 @@ export default new Vuex.Store({
       payload.id = state.notes.length + 1;
       state.notes.unshift(payload);
     },
+
+    archiveNote: (state, index) => {
+      console.log('mutation archive note with index', index)
+      state.notes[index].archived = true
+    },
+
+    restoreNote: (state, index) => {
+      console.log('mutation restore note with index', index)
+      state.notes[index].archived = false
+    },
+
+    deleteNote: (state, index) => {
+      console.log('mutation delete note with index', index)
+      state.notes[index].deleted = true;
+    }
   },
   actions: {
     addLabel: ({ state, commit }, payload) => {
@@ -72,6 +90,45 @@ export default new Vuex.Store({
         commit('addNote', payload)
         resolve();
       })
+    },
+
+    archiveNote: ({ state, commit }, payload) => {
+      console.log('action archive note with payload ', payload)
+      return new Promise((resolve, reject) => {
+        const index = state.notes.findIndex(note => note.id == payload.id)
+        if (index != -1) {
+          commit('archiveNote', index);
+          resolve();
+        } else {
+          reject();
+        }
+      })
+    },
+
+    restoreNote: ({ state, commit }, payload) => {
+      console.log('action restore note with payload ', payload)
+      return new Promise((resolve, reject) => {
+        const index = state.notes.findIndex(note => note.id == payload.id)
+        if (index != -1) {
+          commit('restoreNote', index);
+          resolve();
+        } else {
+          reject();
+        }
+      })
+    },
+
+    deleteNote: ({ state, commit }, payload) => {
+      console.log('action delete note with payload', payload)
+      return new Promise((resolve, reject) => {
+        const index = state.notes.findIndex(note => note.id == payload.id)
+        if (index != -1) {
+          commit('deleteNote', index)
+          resolve()
+        } else {
+          reject()
+        }
+      })
     }
   },
   modules: {
@@ -88,6 +145,6 @@ export default new Vuex.Store({
     },
     listDeleted: (state) => {
       return state.notes.filter(note => note.deleted)
-    }
+    },
   }
 })

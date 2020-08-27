@@ -57,17 +57,11 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "NoteModal",
   data() {
     return this.initialState();
-  },
-  props: {
-    labels: {
-      type: Array,
-      required: false,
-      default: () => ["joel", "francisco", "rogerio"],
-    },
   },
 
   methods: {
@@ -96,6 +90,8 @@ export default {
           title: this.noteTitle,
           description: this.noteDescription,
           labels: this.noteLabels,
+          archived: false,
+          deleted: false,
         };
 
         console.log("save note with payload ", payload);
@@ -126,6 +122,10 @@ export default {
       // Reset forms
       this.$refs.formAddNote.reset();
     },
+  },
+
+  computed: {
+    ...mapState(["labels"]),
   },
 };
 </script>

@@ -72,20 +72,16 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "ReminderModal",
   data() {
     return this.initialState();
   },
-  props: {
-    labels: {
-      type: Array,
-      required: false,
-      default: () => ["joel", "francisco", "rogerio"],
-    },
-  },
 
   computed: {
+    ...mapState(["labels"]),
+
     minDate() {
       return this.currentDate.toISOString().substr(0, 10);
     },
@@ -150,6 +146,8 @@ export default {
           description: this.noteDescription,
           labels: this.noteLabels,
           date: this.submittableDateTime,
+          archived: false,
+          deleted: false,
         };
 
         console.log("save note with payload ", payload);
